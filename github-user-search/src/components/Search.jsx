@@ -65,17 +65,3 @@ const Search = () => {
       {status === 'error' && (
         <p style={{ marginTop: '1rem', color: 'crimson' }}>{errorMsg}</p>
       )}
-      {status === 'success' && userData && (
-        <div>
-          <UserCard user={userData} />
-          {/* Ensure login is visible even if name exists */}
-          <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
-            login: {userData.login}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Search;
