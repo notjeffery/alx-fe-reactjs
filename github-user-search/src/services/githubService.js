@@ -18,14 +18,20 @@ export const fetchUserData = async (username) => {
   if (!username || typeof username !== 'string') {
     throw new Error('Username must be a non-empty string');
   }
-
-  try {
-    const response = await githubAPI.get(`/users/${username}`);
-    return response.data;
-  } catch (err) {
-    // Re-throw so callers can handle status-specific logic
-    throw err;
-  }
+  const response = await githubAPI.get(`/users/${username}`);
+  return response.data;
 };
 
-export default fetchUserData;
+/**
+ * Search GitHub users by username.
+ * @param {Object} params - { username }
+ * @returns {Promise<Object>} - GitHub Search API response
+ */
+export const searchUsers = async ({ username }) => {
+  const response = await githubAPI.get('/search/users', {
+    params: {
+      q: username,
+    },
+  });
+  return response.data; // contains items array
+};
