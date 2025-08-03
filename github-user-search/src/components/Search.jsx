@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 import UserCard from './UserCard';
 
-const SearchInput = () => {
+const Search = () => {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
@@ -70,4 +70,4 @@ const SearchInput = () => {
   );
 };
 
-export default SearchInput;
+export default Search;
