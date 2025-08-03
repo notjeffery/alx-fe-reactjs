@@ -15,6 +15,17 @@ const githubAPI = axios.create({
  * @returns {Promise<Object>}
  */
 export const fetchUserData = async (username) => {
-  const response = await githubAPI.get(`/users/${username}`);
-  return response.data;
+  if (!username || typeof username !== 'string') {
+    throw new Error('Username must be a non-empty string');
+  }
+
+  try {
+    const response = await githubAPI.get(`/users/${username}`);
+    return response.data;
+  } catch (err) {
+    // Re-throw so callers can handle status-specific logic
+    throw err;
+  }
 };
+
+export default fetchUserData;
