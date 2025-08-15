@@ -15,22 +15,30 @@ const RecipeDetail = () => {
   }, [id]);
 
   if (!recipe) {
-    return <p>Loading...</p>;
+    return <p className="text-lg font-semibold">Loading...</p>;
   }
 
   return (
-    <div className="shadow p-4">
-      <h1>{recipe.name}</h1>
-      <img src={recipe.image} alt={recipe.name} />
-      <h2>Ingredients</h2>
-      <ul>
+    <div className="shadow p-6 bg-white rounded-lg">
+      <h1 className="text-3xl font-bold mb-4">{recipe.name}</h1>
+      <img
+        src={recipe.image}
+        alt={recipe.name}
+        className="w-full h-64 object-cover rounded-md mb-6"
+      />
+
+      <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
+      <ul className="list-disc pl-5 mb-4">
         {recipe.ingredients &&
           recipe.ingredients.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
+            <li key={index} className="text-lg">
+              {ingredient}
+            </li>
           ))}
       </ul>
-      <h2>Instructions</h2>
-      <p>{recipe.instructions}</p>
+
+      <h2 className="text-2xl font-semibold mb-2">Instructions</h2>
+      <p className="text-base">{recipe.instructions}</p>
     </div>
   );
 };
