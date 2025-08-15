@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 
 const AddRecipeForm = () => {
@@ -9,7 +10,6 @@ const AddRecipeForm = () => {
 
   const validate = () => {
     const errs = {};
-
     if (!title.trim()) {
       errs.title = "Recipe title is required.";
     }
@@ -42,14 +42,18 @@ const AddRecipeForm = () => {
       return;
     }
 
-    // Simulate submit
-    console.log({
-      title,
-      ingredients,
-      steps,
-    });
 
-    // Reset
+    const payload = {
+      title: title.trim(),
+      ingredients: ingredients
+        .split(",")
+        .map((i) => i.trim())
+        .filter(Boolean),
+      steps: steps.trim(),
+    };
+    console.log("Submitting recipe:", payload);
+
+    // Reset form
     setTitle("");
     setIngredients("");
     setSteps("");
@@ -57,18 +61,17 @@ const AddRecipeForm = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow mt-6">
-      <h2 className="text-2xl font-bold mb-4">Add a New Recipe</h2>
-
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow mt-6">
+      <h2 className="text-2xl md:text-3xl font-bold mb-4">Add a New Recipe</h2>
 
       {Object.keys(errors).length > 0 && (
-        <div className="mb-4 text-red-600 text-sm">
-          Please fix the errors below.
-        </div>
+        <div className="mb-4 text-red-600 text-sm">Please fix the errors below.</div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
+
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div className="md:col-span-2">
           <label className="block text-sm font-medium mb-1" htmlFor="title">
             Recipe Title
           </label>
@@ -90,17 +93,15 @@ const AddRecipeForm = () => {
           )}
         </div>
 
-        <div>
-          <label
-            className="block text-sm font-medium mb-1"
-            htmlFor="ingredients"
-          >
+
+        <div className="md:col-span-1">
+          <label className="block text-sm font-medium mb-1" htmlFor="ingredients">
             Ingredients <span className="text-gray-500">(comma separated)</span>
           </label>
           <textarea
             id="ingredients"
-            rows="3"
-            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring focus:border-blue-300 ${
+            rows="6"
+            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring focus:border-blue-300 h-32 ${
               errors.ingredients ? "border-red-500" : "border-gray-300"
             }`}
             value={ingredients}
@@ -115,14 +116,15 @@ const AddRecipeForm = () => {
           )}
         </div>
 
-        <div>
+        
+        <div className="md:col-span-1">
           <label className="block text-sm font-medium mb-1" htmlFor="steps">
             Preparation Steps
           </label>
           <textarea
             id="steps"
-            rows="4"
-            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring focus:border-blue-300 ${
+            rows="6"
+            className={`w-full border rounded-lg p-2 focus:outline-none focus:ring focus:border-blue-300 h-32 ${
               errors.steps ? "border-red-500" : "border-gray-300"
             }`}
             value={steps}
@@ -137,12 +139,15 @@ const AddRecipeForm = () => {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
-        >
-          Submit Recipe
-        </button>
+
+        <div className="md:col-span-2">
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+          >
+            Submit Recipe
+          </button>
+        </div>
       </form>
     </div>
   );
