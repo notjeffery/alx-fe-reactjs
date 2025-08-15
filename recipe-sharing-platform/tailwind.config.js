@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
-    './public/index.html', // ✅ added for checker
-    './index.html',
-    './src/**/*.{js,jsx,ts,tsx}'
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html"
   ],
   theme: {
     extend: {},
