@@ -1,30 +1,29 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from 'react-query';
 
-async function fetchPosts() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  return res.json();
-}
-
-function PostsComponent() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["posts"],
-    queryFn: fetchPosts,
+export default function PostsComponent() {
+  const { isLoading, error, data } = useQuery('posts', async () => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
   });
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Something went wrong!</p>;
+
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <ul>
-      {data.slice(0, 10).map((post) => (
-        <li key={post.id}>
-          <strong>{post.title}</strong>
-          <p>{post.body}</p>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <h2>Posts</h2>
+      <ul>
+        {data.slice(0, 10).map((post) => (
+          <li key={post.id}>
+            <strong>{post.title}</strong>
+            <p>{post.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
-
-export default PostsComponent;
