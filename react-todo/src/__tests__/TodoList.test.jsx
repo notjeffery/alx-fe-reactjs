@@ -1,5 +1,6 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom"; // ✅ ensures toBeInTheDocument, toHaveStyle work
 import TodoList from "../components/TodoList";
 
 test("renders initial todos", () => {
@@ -23,9 +24,12 @@ test("toggles todo completion", () => {
   render(<TodoList />);
   const todoItem = screen.getByText("Learn React");
 
+  
   expect(todoItem).toHaveStyle("text-decoration: none");
 
   fireEvent.click(todoItem);
+
+ 
   expect(todoItem).toHaveStyle("text-decoration: line-through");
 });
 
@@ -35,5 +39,6 @@ test("deletes a todo", () => {
   const deleteButton = screen.getAllByTestId("delete-button")[0];
 
   fireEvent.click(deleteButton);
+
   expect(todoItem).not.toBeInTheDocument();
 });
